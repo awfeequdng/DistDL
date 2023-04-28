@@ -1,0 +1,3 @@
+[submodule "contrib/sysroot"]
+	path = contrib/sysroot
+	url = git@github.com:ClickHouse/sysroot
