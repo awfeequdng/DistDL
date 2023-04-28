@@ -39,13 +39,13 @@ include (cmake/cxx.cmake)
 # which are ok with static libraries but not with dynamic ones
 link_libraries(global-group)
 
-if (NOT OS_ANDROID)
-    if (NOT USE_MUSL)
-        # Our compatibility layer doesn't build under Android, many errors in musl.
-        add_subdirectory(base/glibc-compatibility)
-    endif ()
-    add_subdirectory(base/harmful)
-endif ()
+# if (NOT OS_ANDROID)
+#     if (NOT USE_MUSL)
+#         # Our compatibility layer doesn't build under Android, many errors in musl.
+#         add_subdirectory(base/glibc-compatibility)
+#     endif ()
+#     add_subdirectory(base/harmful)
+# endif ()
 
 target_link_libraries(global-group INTERFACE
     -Wl,--start-group

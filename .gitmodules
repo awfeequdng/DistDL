@@ -1,3 +1,15 @@
 [submodule "contrib/sysroot"]
 	path = contrib/sysroot
 	url = git@github.com:ClickHouse/sysroot
+[submodule "contrib/llvm-project"]
+	path = contrib/llvm-project
+	url = git@github.com:ClickHouse/llvm-project
+[submodule "contrib/libunwind"]
+	path = contrib/libunwind
+	url = git@github.com:ClickHouse/libunwind
+[submodule "contrib/jemalloc"]
+	path = contrib/jemalloc
+	url = git@github.com:jemalloc/jemalloc
+[submodule "contrib/fmtlib"]
+	path = contrib/fmtlib
+	url = git@github.com:fmtlib/fmt
