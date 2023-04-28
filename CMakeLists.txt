@@ -262,6 +262,10 @@ option(ENABLE_LIBRARIES "Enable all external libraries by default" ON)
 include(cmake/distdl_glob_sources.cmake)
 
 
+# set(BUILD_SHARED_LIBS ON)
+
+set (CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 add_library(global-group INTERFACE)
 if (OS_LINUX OR OS_ANDROID)
     include(cmake/linux/default_libs.cmake)
@@ -283,7 +287,6 @@ if (OS_LINUX AND NOT SANITIZE)
     target_link_options(global-group INTERFACE "LINKER:--no-undefined")
 endif ()
 
-set (CMAKE_POSITION_INDEPENDENT_CODE ON)
 if (OS_LINUX AND NOT (ARCH_AARCH64 OR ARCH_S390X))
     # Slightly more efficient code can be generated
     # It's disabled for ARM because otherwise ClickHouse cannot run on Android.

@@ -30,8 +30,8 @@ target_compile_options(cxxabi PRIVATE -w)
 
 target_include_directories(cxxabi SYSTEM BEFORE
     PUBLIC $<BUILD_INTERFACE:${LIBCXXABI_SOURCE_DIR}/include>
-    # PRIVATE $<BUILD_INTERFACE:${LIBCXXABI_SOURCE_DIR}/../libcxx/include>
-    # PRIVATE $<BUILD_INTERFACE:${LIBCXXABI_SOURCE_DIR}/../libcxx/src>
+    PRIVATE $<BUILD_INTERFACE:${LIBCXXABI_SOURCE_DIR}/../libcxx/include>
+    PRIVATE $<BUILD_INTERFACE:${LIBCXXABI_SOURCE_DIR}/../libcxx/src>
 )
 target_compile_definitions(cxxabi PRIVATE -D_LIBCPP_BUILDING_LIBRARY)
 target_compile_options(cxxabi PRIVATE -nostdinc++ -fno-sanitize=undefined -Wno-macro-redefined) # If we don't disable UBSan, infinite recursion happens in dynamic_cast.
