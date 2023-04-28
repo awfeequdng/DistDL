@@ -1,0 +1,6 @@
+if (CMAKE_SYSTEM_NAME MATCHES "Linux")
+    set (OS_LINUX 1)
+    add_definitions(-D OS_LINUX)
+else ()
+    message (FATAL_ERROR "Platform ${CMAKE_SYSTEM_NAME} is not supported")
+endif ()
