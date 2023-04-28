@@ -264,7 +264,7 @@ include(cmake/distdl_glob_sources.cmake)
 
 # set(BUILD_SHARED_LIBS ON)
 
-set (CMAKE_POSITION_INDEPENDENT_CODE ON)
+set (CMAKE_POSITION_INDEPENDENT_CODE OFF)
 
 add_library(global-group INTERFACE)
 if (OS_LINUX OR OS_ANDROID)
@@ -335,3 +335,6 @@ if (NOT ENABLE_JEMALLOC)
     message (WARNING "Non default allocator is disabled. This is not recommended for production builds.")
 endif ()
 
+# Add as many warnings as possible for our own code.
+include (cmake/warnings.cmake)
+include (cmake/print_flags.cmake)
