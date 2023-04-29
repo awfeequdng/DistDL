@@ -11,14 +11,14 @@ namespace distdl {
 
 class DistDLModuleRegistry {
  public:
-  DistDLModuleRegistry() = default;
-  ~DistDLModuleRegistry() = default;
+  DistDLModuleRegistry() = delete;
+  ~DistDLModuleRegistry() = delete;
 
-  void Register(std::string module_path, std::function<void(pybind11::module&)> BuildModule);
-  void ImportAll(pybind11::module& m);
+  static void Register(std::string module_path, std::function<void(pybind11::module&)> BuildModule);
+  static void ImportAll(pybind11::module& m);
 
  private:
-  void BuildSubModule(const std::string& module_path, pybind11::module& m,
+  static void BuildSubModule(const std::string& module_path, pybind11::module& m,
                       const std::function<void(pybind11::module&)>& BuildModule);
 };
 
@@ -29,7 +29,7 @@ class DistDLModuleRegistry {
   namespace {                                                                                    \
   struct DistDLApiRegistryInit {                                                                     \
     DistDLApiRegistryInit() {                                                                        \
-      ::distdl::DistDLModuleRegistry().Register(module_path,                                   \
+      ::distdl::DistDLModuleRegistry::Register(module_path,                                   \
                                                   &DISTDL_PP_CAT(DistDLApiPythonModule, __LINE__)); \
     }                                                                                            \
   };                                                                                             \
