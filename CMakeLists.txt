@@ -264,7 +264,7 @@ include(cmake/distdl_glob_sources.cmake)
 
 # set(BUILD_SHARED_LIBS ON)
 
-set (CMAKE_POSITION_INDEPENDENT_CODE OFF)
+set (CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 add_library(global-group INTERFACE)
 if (OS_LINUX OR OS_ANDROID)
@@ -338,3 +338,13 @@ endif ()
 # Add as many warnings as possible for our own code.
 include (cmake/warnings.cmake)
 include (cmake/print_flags.cmake)
+
+include_directories(./)
+
+option(BUILD_PYTHON "build python api" ON)
+
+if (BUILD_PYTHON)
+    include (cmake/python.cmake)
+endif ()
+
+add_subdirectory (src)

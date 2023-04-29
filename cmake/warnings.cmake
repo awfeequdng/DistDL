@@ -46,5 +46,10 @@ if (COMPILER_CLANG)
     no_warning(thread-safety-negative) # experimental flag, too many false positives
     no_warning(enum-constexpr-conversion) # breaks magic-enum library in clang-16
     no_warning(unsafe-buffer-usage) # too aggressive
+
+    # todo: add by pxcai, may removed in the future
+    no_warning(reserved-macro-identifier)
+    no_warning(poison-system-directories)
+
     # TODO Enable conversion, sign-conversion, double-promotion warnings.
 endif ()

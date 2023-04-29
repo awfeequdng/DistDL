@@ -56,21 +56,21 @@ if (OS MATCHES "Linux"
     endif()
 endif()
 
-if (OS MATCHES "Linux"
-    AND NOT DEFINED CMAKE_TOOLCHAIN_FILE
-    AND NOT DISABLE_HERMETIC_BUILD
-    AND ("$ENV{CC}" MATCHES ".*clang.*" OR CMAKE_C_COMPILER MATCHES ".*clang.*"))
+# if (OS MATCHES "Linux"
+#     AND NOT DEFINED CMAKE_TOOLCHAIN_FILE
+#     AND NOT DISABLE_HERMETIC_BUILD
+#     AND ("$ENV{CC}" MATCHES ".*clang.*" OR CMAKE_C_COMPILER MATCHES ".*clang.*"))
 
-    if (ARCH MATCHES "amd64|x86_64")
-        set (CMAKE_TOOLCHAIN_FILE "cmake/linux/toolchain-x86_64.cmake" CACHE INTERNAL "")
-    elseif (ARCH MATCHES "^(aarch64.*|AARCH64.*|arm64.*|ARM64.*)")
-        set (CMAKE_TOOLCHAIN_FILE "cmake/linux/toolchain-aarch64.cmake" CACHE INTERNAL "")
-    elseif (ARCH MATCHES "^(ppc64le.*|PPC64LE.*)")
-        set (CMAKE_TOOLCHAIN_FILE "cmake/linux/toolchain-ppc64le.cmake" CACHE INTERNAL "")
-    elseif (ARCH MATCHES "^(s390x.*|S390X.*)")
-        set (CMAKE_TOOLCHAIN_FILE "cmake/linux/toolchain-s390x.cmake" CACHE INTERNAL "")
-    else ()
-        message (FATAL_ERROR "Unsupported architecture: ${ARCH}")
-    endif ()
+#     if (ARCH MATCHES "amd64|x86_64")
+#         set (CMAKE_TOOLCHAIN_FILE "cmake/linux/toolchain-x86_64.cmake" CACHE INTERNAL "")
+#     elseif (ARCH MATCHES "^(aarch64.*|AARCH64.*|arm64.*|ARM64.*)")
+#         set (CMAKE_TOOLCHAIN_FILE "cmake/linux/toolchain-aarch64.cmake" CACHE INTERNAL "")
+#     elseif (ARCH MATCHES "^(ppc64le.*|PPC64LE.*)")
+#         set (CMAKE_TOOLCHAIN_FILE "cmake/linux/toolchain-ppc64le.cmake" CACHE INTERNAL "")
+#     elseif (ARCH MATCHES "^(s390x.*|S390X.*)")
+#         set (CMAKE_TOOLCHAIN_FILE "cmake/linux/toolchain-s390x.cmake" CACHE INTERNAL "")
+#     else ()
+#         message (FATAL_ERROR "Unsupported architecture: ${ARCH}")
+#     endif ()
 
-endif()
+# endif()

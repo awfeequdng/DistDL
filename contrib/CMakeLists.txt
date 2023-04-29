@@ -49,6 +49,7 @@ endfunction()
 
 add_contrib (jemalloc-cmake jemalloc)
 add_contrib (fmtlib-cmake fmtlib)
+add_contrib (pybind11-cmake pybind11)
 # add_contrib (google-benchmark-cmake google-benchmark)
 
 
