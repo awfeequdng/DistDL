@@ -1,8 +1,3 @@
-include (CheckCXXSourceCompiles)
-include (CMakePushCheckState)
-
-cmake_push_check_state ()
-
 file(
     GLOB_RECURSE
     distdl_all_src
@@ -22,7 +17,7 @@ target_include_directories(distdl PRIVATE ${Python_INCLUDE_DIRS})
 target_link_libraries(distdl
     PRIVATE
         ch_contrib::pybind11
-        python3.8
+        ${Python3_LIBRARIES}
 )
 
 # unset BUILD_SHARED_LIBS

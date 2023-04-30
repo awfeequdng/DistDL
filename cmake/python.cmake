@@ -1,6 +1,6 @@
 if(NOT DEFINED Python3_EXECUTABLE)
   execute_process(
-    COMMAND which python3.8
+    COMMAND which python${DEFAULT_PYTHON_VERSION}
     RESULT_VARIABLE STATUS
     OUTPUT_VARIABLE OUTPUT
     ERROR_QUIET)

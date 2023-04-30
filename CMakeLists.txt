@@ -342,6 +342,7 @@ include (cmake/print_flags.cmake)
 include_directories(./)
 
 option(BUILD_PYTHON "build python api" ON)
+option(DEFAULT_PYTHON_VERSION "default python version" 3.8)
 
 if (BUILD_PYTHON)
     include (cmake/python.cmake)
