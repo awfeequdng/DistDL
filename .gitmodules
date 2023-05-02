@@ -16,3 +16,6 @@
 [submodule "contrib/pybind11"]
 	path = contrib/pybind11
 	url = git@github.com:pybind/pybind11.git
+[submodule "contrib/glog"]
+	path = contrib/glog
+	url = git@github.com:google/glog.git

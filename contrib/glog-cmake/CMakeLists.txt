@@ -1,0 +1,650 @@
+set(GLOG_SOURCE_DIR "${PROJECT_SOURCE_DIR}/contrib/glog")
+
+# project (glog
+#   VERSION 0.6.0
+#   DESCRIPTION "C++ implementation of the Google logging module"
+#   HOMEPAGE_URL https://github.com/google/glog
+#   LANGUAGES CXX
+# )
+
+set (CPACK_PACKAGE_NAME glog)
+set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Google logging library")
+set (CPACK_PACKAGE_VERSION_MAJOR 0)
+set (CPACK_PACKAGE_VERSION_MINOR 6)
+set (CPACK_PACKAGE_VERSION_PATCH 0)
+set (CPACK_PACKAGE_VERSION 0.6.0)
+
+# list (APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+include (CheckCXXCompilerFlag)
+include (CheckCXXSourceCompiles)
+include (CheckCXXSourceRuns)
+include (CheckCXXSymbolExists)
+# include (CheckFunctionExists)
+# include (CheckIncludeFileCXX)
+# include (CheckLibraryExists)
+# include (CheckStructHasMember)
+# include (CheckTypeSize)
+# include (CMakeDependentOption)
+# include (CMakePackageConfigHelpers)
+# include (CMakePushCheckState)
+# include (CPack)
+# include (CTest)
+# include (DetermineGflagsNamespace)
+include (GenerateExportHeader)
+# include (GetCacheVariables)
+# include (GNUInstallDirs)
+
+# option (BUILD_SHARED_LIBS "Build shared libraries" ON)
+# option (PRINT_UNSYMBOLIZED_STACK_TRACES
+#   "Print file offsets in traces instead of symbolizing" OFF)
+option (WITH_CUSTOM_PREFIX "Enable support for user-generated message prefixes" ON)
+option (WITH_GFLAGS "Use gflags" ON)
+# option (WITH_GTEST "Use Google Test" ON)
+# option (WITH_PKGCONFIG "Enable pkg-config support" ON)
+option (WITH_SYMBOLIZE "Enable symbolize module" ON)
+option (WITH_THREADS "Enable multithreading support" ON)
+option (WITH_TLS "Enable Thread Local Storage (TLS) support" ON)
+option (WITH_UNWIND "Enable libunwind support" ON)
+
+# cmake_dependent_option (WITH_GMOCK "Use Google Mock" ON WITH_GTEST OFF)
+
+# if (NOT WITH_UNWIND)
+#   set (CMAKE_DISABLE_FIND_PACKAGE_Unwind ON)
+# endif (NOT WITH_UNWIND)
+
+# if (NOT WITH_GTEST)
+#   set (CMAKE_DISABLE_FIND_PACKAGE_GTest ON)
+# endif (NOT WITH_GTEST)
+
+# if (NOT WITH_THREADS)
+#   set (CMAKE_DISABLE_FIND_PACKAGE_Threads ON)
+# endif (NOT WITH_THREADS)
+
+# set (CMAKE_C_VISIBILITY_PRESET hidden)
+# set (CMAKE_CXX_VISIBILITY_PRESET hidden)
+# set (CMAKE_POSITION_INDEPENDENT_CODE ON)
+# set (CMAKE_VISIBILITY_INLINES_HIDDEN ON)
+
+# set (CMAKE_DEBUG_POSTFIX d)
+# set (CMAKE_THREAD_PREFER_PTHREAD 1)
+
+# find_package (GTest NO_MODULE)
+
+# if (GTest_FOUND)
+#   set (HAVE_LIB_GTEST 1)
+# endif (GTest_FOUND)
+
+# if (WITH_GMOCK AND TARGET GTest::gmock)
+#   set (HAVE_LIB_GMOCK 1)
+# endif (WITH_GMOCK AND TARGET GTest::gmock)
+
+
+# if (WITH_GFLAGS)
+#   find_package (gflags 2.2.2)
+
+#   if (gflags_FOUND)
+#     set (HAVE_LIB_GFLAGS 1)
+#     determine_gflags_namespace (gflags_NAMESPACE)
+#   endif (gflags_FOUND)
+# endif (WITH_GFLAGS)
+
+find_package (Threads)
+# find_package (Unwind)
+
+set (HAVE_LIB_UNWIND 1)
+
+# check_include_file_cxx (dlfcn.h HAVE_DLFCN_H)
+set(HAVE_DLFCN_H 1)
+# check_include_file_cxx (execinfo.h HAVE_EXECINFO_H)
+set(HAVE_EXECINFO_H 1)
+# check_include_file_cxx (glob.h HAVE_GLOB_H)
+set(HAVE_GLOB_H 1)
+# check_include_file_cxx (inttypes.h HAVE_INTTYPES_H)
+set(HAVE_INTTYPES_H 1)
+# check_include_file_cxx (memory.h HAVE_MEMORY_H)
+set(HAVE_MEMORY_H 1)
+# check_include_file_cxx (pwd.h HAVE_PWD_H)
+set(HAVE_PWD_H 1)
+# check_include_file_cxx (stdint.h HAVE_STDINT_H)
+set(HAVE_STDINT_H 1)
+# check_include_file_cxx (strings.h HAVE_STRINGS_H)
+set(HAVE_STRINGS_H 1)
+# check_include_file_cxx (sys/stat.h HAVE_SYS_STAT_H)
+set(HAVE_SYS_STAT_H 1)
+# check_include_file_cxx (sys/syscall.h HAVE_SYS_SYSCALL_H)
+set(HAVE_SYS_SYSCALL_H 1)
+# check_include_file_cxx (sys/time.h HAVE_SYS_TIME_H)
+set(HAVE_SYS_TIME_H 1)
+# check_include_file_cxx (sys/types.h HAVE_SYS_TYPES_H)
+set(HAVE_SYS_TYPES_H 1)
+# check_include_file_cxx (sys/utsname.h HAVE_SYS_UTSNAME_H)
+set(HAVE_SYS_UTSNAME_H 1)
+# check_include_file_cxx (sys/wait.h HAVE_SYS_WAIT_H)
+set(HAVE_SYS_WAIT_H 1)
+# check_include_file_cxx (syscall.h HAVE_SYSCALL_H)
+set(HAVE_SYSCALL_H 1)
+# check_include_file_cxx (syslog.h HAVE_SYSLOG_H)
+set(HAVE_SYSLOG_H 1)
+# check_include_file_cxx (ucontext.h HAVE_UCONTEXT_H)
+set(HAVE_UCONTEXT_H 0)
+# check_include_file_cxx (unistd.h HAVE_UNISTD_H)
+set(HAVE_UNISTD_H 1)
+
+# check_include_file_cxx ("ext/hash_map" HAVE_EXT_HASH_MAP)
+# check_include_file_cxx ("ext/hash_set" HAVE_EXT_HASH_SET)
+# check_include_file_cxx ("ext/slist" HAVE_EXT_SLIST)
+# check_include_file_cxx ("tr1/unordered_map" HAVE_TR1_UNORDERED_MAP)
+# check_include_file_cxx ("tr1/unordered_set" HAVE_TR1_UNORDERED_SET)
+# check_include_file_cxx ("unordered_map" HAVE_UNORDERED_MAP)
+set(HAVE_UNORDERED_MAP 1)
+# check_include_file_cxx ("unordered_set" HAVE_UNORDERED_SET)
+set(HAVE_UNORDERED_SET 1)
+
+# check_type_size ("unsigned __int16" HAVE___UINT16 LANGUAGE CXX)
+# check_type_size (u_int16_t HAVE_U_INT16_T LANGUAGE CXX)
+# check_type_size (uint16_t HAVE_UINT16_T LANGUAGE CXX)
+set(HAVE_UINT16_T 1)
+
+# check_function_exists (dladdr HAVE_DLADDR)
+set(HAVE_DLADDR 1)
+# check_function_exists (fcntl HAVE_FCNTL)
+set(HAVE_FCNTL 1)
+# check_function_exists (pread HAVE_PREAD)
+set(HAVE_PREAD 1)
+# check_function_exists (pwrite HAVE_PWRITE)
+set(HAVE_PWRITE 1)
+# check_function_exists (sigaction HAVE_SIGACTION)
+set(HAVE_SIGACTION 1)
+# check_function_exists (sigaltstack HAVE_SIGALTSTACK)
+set(HAVE_SIGALTSTACK 1)
+
+# NOTE gcc does not fail if you pass a non-existent -Wno-* option as an
+# argument. However, it will happily fail if you pass the corresponding -W*
+# option. So, we check whether options that disable warnings exist by testing
+# the availability of the corresponding option that enables the warning. This
+# eliminates the need to check for compiler for several (mainly Clang) options.
+
+check_cxx_compiler_flag (-Wdeprecated HAVE_NO_DEPRECATED)
+check_cxx_compiler_flag (-Wunnamed-type-template-args
+    HAVE_NO_UNNAMED_TYPE_TEMPLATE_ARGS)
+
+cmake_push_check_state (RESET)
+
+if (Threads_FOUND)
+  set (CMAKE_REQUIRED_LIBRARIES Threads::Threads)
+endif (Threads_FOUND)
+
+check_cxx_symbol_exists (pthread_threadid_np "pthread.h" HAVE_PTHREAD_THREADID_NP)
+cmake_pop_check_state ()
+
+# NOTE: Cannot use check_function_exists here since >=vc-14.0 can define
+# snprintf as an inline function
+check_cxx_symbol_exists (snprintf cstdio HAVE_SNPRINTF)
+
+check_library_exists (dbghelp UnDecorateSymbolName "" HAVE_DBGHELP)
+
+check_cxx_source_compiles ("
+#include <cstdlib>
+static void foo(void) __attribute__ ((unused));
+int main(void) { return 0; }
+" HAVE___ATTRIBUTE__)
+
+check_cxx_source_compiles ("
+#include <cstdlib>
+static void foo(void) __attribute__ ((visibility(\"default\")));
+int main(void) { return 0; }
+" HAVE___ATTRIBUTE__VISIBILITY_DEFAULT)
+
+check_cxx_source_compiles ("
+#include <cstdlib>
+static void foo(void) __attribute__ ((visibility(\"hidden\")));
+int main(void) { return 0; }
+" HAVE___ATTRIBUTE__VISIBILITY_HIDDEN)
+
+check_cxx_source_compiles ("
+int main(void) { if (__builtin_expect(0, 0)) return 1; return 0; }
+" HAVE___BUILTIN_EXPECT)
+
+check_cxx_source_compiles ("
+int main(void)
+{
+  int a; if (__sync_val_compare_and_swap(&a, 0, 1)) return 1; return 0;
+}
+" HAVE___SYNC_VAL_COMPARE_AND_SWAP)
+
+cmake_push_check_state (RESET)
+set (CMAKE_REQUIRED_LIBRARIES Threads::Threads)
+check_cxx_source_compiles ("
+#define _XOPEN_SOURCE 500
+#include <pthread.h>
+int main(void)
+{
+  pthread_rwlock_t l;
+  pthread_rwlock_init(&l, NULL);
+  pthread_rwlock_rdlock(&l);
+  return 0;
+}
+" HAVE_RWLOCK)
+cmake_pop_check_state ()
+
+check_cxx_source_compiles ("
+__declspec(selectany) int a;
+int main(void) { return 0; }
+" HAVE___DECLSPEC)
+
+check_cxx_source_compiles ("
+#include <vector>
+vector<int> t; int main() { }
+" STL_NO_NAMESPACE)
+
+check_cxx_source_compiles ("
+#include <vector>
+std::vector<int> t; int main() { }
+" STL_STD_NAMESPACE)
+
+check_cxx_source_compiles ("
+#include <iostream>
+std::ostream& operator<<(std::ostream&, struct s);
+using ::operator<<;
+int main() { }
+" HAVE_USING_OPERATOR)
+
+check_cxx_source_compiles ("
+namespace Outer { namespace Inner { int i = 0; }}
+using namespace Outer::Inner;;
+int main() { return i; }
+" HAVE_NAMESPACES)
+
+check_cxx_source_compiles ("
+__thread int tls;
+int main() { }
+" HAVE_GCC_TLS)
+
+check_cxx_source_compiles ("
+__declspec(thread) int tls;
+int main() { }
+" HAVE_MSVC_TLS)
+
+check_cxx_source_compiles ("
+thread_local int tls;
+int main() { }
+" HAVE_CXX11_TLS)
+
+check_cxx_source_compiles ("
+#include <type_traits>
+std::aligned_storage<sizeof(char), alignof(char)>::type data;
+int main() { }
+" HAVE_ALIGNED_STORAGE)
+
+check_cxx_source_compiles ("
+#include <atomic>
+std::atomic<int> i;
+int main() { }
+" HAVE_CXX11_ATOMIC)
+
+check_cxx_source_compiles ("
+constexpr int x = 0;
+int main() { }
+" HAVE_CXX11_CONSTEXPR)
+
+check_cxx_source_compiles ("
+#include <chrono>
+std::chrono::seconds s;
+int main() { }
+" HAVE_CXX11_CHRONO)
+
+check_cxx_source_compiles ("
+#include <cstddef>
+void foo(std::nullptr_t) {}
+int main(void) { foo(nullptr); }
+" HAVE_CXX11_NULLPTR_T)
+
+# if (WITH_TLS)
+#   # Cygwin does not support the thread attribute. Don't bother.
+#   if (HAVE_GCC_TLS)
+#     set (GLOG_THREAD_LOCAL_STORAGE "__thread")
+#   elseif (HAVE_MSVC_TLS)
+#     set (GLOG_THREAD_LOCAL_STORAGE "__declspec(thread)")
+#   elseif (HAVE_CXX11_TLS)
+#     set (GLOG_THREAD_LOCAL_STORAGE thread_local)
+#   endif (HAVE_GCC_TLS)
+# endif (WITH_TLS)
+set (GLOG_THREAD_LOCAL_STORAGE thread_local)
+
+set (_PC_FIELDS
+  "gregs[REG_PC]"
+  "gregs[REG_EIP]"
+  "gregs[REG_RIP]"
+  "sc_ip"
+  "uc_regs->gregs[PT_NIP]"
+  "gregs[R15]"
+  "arm_pc"
+  "mc_eip"
+  "mc_rip"
+  "__gregs[REG_EIP]"
+  "__gregs[REG_RIP]"
+  "ss.eip"
+  "__ss.__eip"
+  "ss.rip"
+  "__ss.__rip"
+  "ss.srr0"
+  "__ss.__srr0"
+)
+
+set (_PC_HEADERS ucontext.h signal.h)
+
+if (HAVE_UCONTEXT_H AND NOT PC_FROM_UCONTEXT)
+  foreach (_PC_FIELD ${_PC_FIELDS})
+    foreach (_PC_HEADER ${_PC_HEADERS})
+      set (_TMP
+      ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/uctfield.cpp)
+      file (WRITE ${_TMP} "
+#define _GNU_SOURCE 1
+#include <${_PC_HEADER}>
+int main(void)
+{
+  ucontext_t u;
+  return u.${_PC_FIELD} == 0;
+}
+")
+      try_compile (HAVE_PC_FROM_UCONTEXT ${CMAKE_CURRENT_BINARY_DIR} ${_TMP}
+        COMPILE_DEFINITIONS _GNU_SOURCE=1)
+
+      if (HAVE_PC_FROM_UCONTEXT)
+        set (PC_FROM_UCONTEXT ${_PC_FIELD} CACHE)
+      endif (HAVE_PC_FROM_UCONTEXT)
+    endforeach (_PC_HEADER)
+  endforeach (_PC_FIELD)
+endif  (HAVE_UCONTEXT_H AND NOT PC_FROM_UCONTEXT)
+
+if (STL_STD_NAMESPACE)
+  set (STL_NAMESPACE std)
+else (STL_STD_NAMESPACE)
+  set (STL_NAMESPACE "")
+endif (STL_STD_NAMESPACE)
+
+set (GOOGLE_NAMESPACE google)
+set (_START_GOOGLE_NAMESPACE_ "namespace ${GOOGLE_NAMESPACE} {")
+set (_END_GOOGLE_NAMESPACE_ "}")
+set (ac_cv_have_glog_export 1)
+
+if (HAVE___UINT16)
+  set (ac_cv_have___uint16 1)
+else (HAVE___UINT16)
+  set (ac_cv_have___uint16 0)
+endif (HAVE___UINT16)
+
+if (HAVE_INTTYPES_H)
+  set (ac_cv_have_inttypes_h 1)
+else (HAVE_INTTYPES_H)
+  set (ac_cv_have_inttypes_h 0)
+endif (HAVE_INTTYPES_H)
+
+if (HAVE_LIB_GFLAGS)
+  set (ac_cv_have_libgflags 1)
+else (HAVE_LIB_GFLAGS)
+  set (ac_cv_have_libgflags 0)
+endif (HAVE_LIB_GFLAGS)
+
+if (HAVE_STDINT_H)
+  set (ac_cv_have_stdint_h 1)
+else (HAVE_STDINT_H)
+  set (ac_cv_have_stdint_h 0)
+endif (HAVE_STDINT_H)
+
+if (HAVE_SYS_TYPES_H)
+  set (ac_cv_have_systypes_h 1)
+else (HAVE_SYS_TYPES_H)
+  set (ac_cv_have_systypes_h 0)
+endif (HAVE_SYS_TYPES_H)
+
+if (HAVE_U_INT16_T)
+  set (ac_cv_have_u_int16_t 1)
+else (HAVE_U_INT16_T)
+  set (ac_cv_have_u_int16_t 0)
+endif (HAVE_U_INT16_T)
+
+if (HAVE_UINT16_T)
+  set (ac_cv_have_uint16_t 1)
+else (HAVE_UINT16_T)
+  set (ac_cv_have_uint16_t 0)
+endif (HAVE_UINT16_T)
+
+if (HAVE_UNISTD_H)
+  set (ac_cv_have_unistd_h 1)
+else (HAVE_UNISTD_H)
+  set (ac_cv_have_unistd_h 0)
+endif (HAVE_UNISTD_H)
+
+set (ac_google_namespace ${GOOGLE_NAMESPACE})
+set (ac_google_end_namespace ${_END_GOOGLE_NAMESPACE_})
+set (ac_google_start_namespace ${_START_GOOGLE_NAMESPACE_})
+
+if (HAVE___ATTRIBUTE__)
+  set (ac_cv___attribute___noreturn "__attribute__((noreturn))")
+  set (ac_cv___attribute___noinline "__attribute__((noinline))")
+  set (ac_cv___attribute___printf_4_5 "__attribute__((__format__(__printf__, 4, 5)))")
+elseif (HAVE___DECLSPEC)
+  set (ac_cv___attribute___noreturn "__declspec(noreturn)")
+  #set (ac_cv___attribute___noinline "__declspec(noinline)")
+endif (HAVE___ATTRIBUTE__)
+
+if (HAVE___BUILTIN_EXPECT)
+  set (ac_cv_have___builtin_expect 1)
+else (HAVE___BUILTIN_EXPECT)
+  set (ac_cv_have___builtin_expect 0)
+endif (HAVE___BUILTIN_EXPECT)
+
+if (HAVE_USING_OPERATOR)
+  set (ac_cv_cxx_using_operator 1)
+else (HAVE_USING_OPERATOR)
+  set (ac_cv_cxx_using_operator 0)
+endif (HAVE_USING_OPERATOR)
+
+if (HAVE_CXX11_CONSTEXPR)
+  set (ac_cv_cxx11_constexpr 1)
+else (HAVE_CXX11_CONSTEXPR)
+  set (ac_cv_cxx11_constexpr 0)
+endif (HAVE_CXX11_CONSTEXPR)
+
+if (HAVE_CXX11_CHRONO)
+  set (ac_cv_cxx11_chrono 1)
+else (HAVE_CXX11_CHRONO)
+  set (ac_cv_cxx11_chrono 0)
+endif (HAVE_CXX11_CHRONO)
+
+if (HAVE_CXX11_NULLPTR_T)
+  set (ac_cv_cxx11_nullptr_t 1)
+else (HAVE_CXX11_NULLPTR_T)
+  set (ac_cv_cxx11_nullptr_t 0)
+endif (HAVE_CXX11_NULLPTR_T)
+
+if (HAVE_EXECINFO_H)
+  set (HAVE_STACKTRACE 1)
+endif (HAVE_EXECINFO_H)
+
+if (HAVE_CXX11_ATOMIC)
+  set (ac_cv_cxx11_atomic 1)
+else (HAVE_CXX11_ATOMIC)
+  set (ac_cv_cxx11_atomic 0)
+endif (HAVE_CXX11_ATOMIC)
+
+if (WITH_SYMBOLIZE)
+  set (HAVE_SYMBOLIZE 1)
+endif (WITH_SYMBOLIZE)
+
+# CMake manages symbolize availability. The definition is necessary only when
+# building the library. Switch to add_compile_definitions once we drop support
+# for CMake below version 3.12.
+add_definitions (-DGLOG_NO_SYMBOLIZE_DETECTION)
+
+check_cxx_source_compiles ("
+#include <cstdlib>
+#include <ctime>
+int main()
+{
+    time_t timep;
+    struct tm result;
+    localtime_r(&timep, &result);
+    return EXIT_SUCCESS;
+}
+" HAVE_LOCALTIME_R)
+
+set (SIZEOF_VOID_P ${CMAKE_SIZEOF_VOID_P})
+
+if (WITH_THREADS AND Threads_FOUND)
+  if (CMAKE_USE_PTHREADS_INIT)
+    set (HAVE_PTHREAD 1)
+  endif (CMAKE_USE_PTHREADS_INIT)
+else (WITH_THREADS AND Threads_FOUND)
+  set (NO_THREADS 1)
+endif (WITH_THREADS AND Threads_FOUND)
+
+set (TEST_SRC_DIR \"${CMAKE_CURRENT_SOURCE_DIR}\")
+
+configure_file (${GLOG_SOURCE_DIR}/src/config.h.cmake.in ${PROJECT_BINARY_DIR}/contrib/glog/config.h)
+configure_file (${GLOG_SOURCE_DIR}/src/glog/logging.h.in ${PROJECT_BINARY_DIR}/contrib/glog/glog/logging.h @ONLY)
+configure_file (${GLOG_SOURCE_DIR}/src/glog/raw_logging.h.in ${PROJECT_BINARY_DIR}/contrib/glog/glog/raw_logging.h @ONLY)
+configure_file (${GLOG_SOURCE_DIR}/src/glog/stl_logging.h.in ${PROJECT_BINARY_DIR}/contrib/glog/glog/stl_logging.h @ONLY)
+configure_file (${GLOG_SOURCE_DIR}/src/glog/vlog_is_on.h.in ${PROJECT_BINARY_DIR}/contrib/glog/glog/vlog_is_on.h @ONLY)
+
+add_compile_options ($<$<AND:$<BOOL:${HAVE_NO_UNNAMED_TYPE_TEMPLATE_ARGS}>,$<NOT:$<CXX_COMPILER_ID:GNU>>>:-Wno-unnamed-type-template-args>)
+
+# set (_glog_CMake_BINDIR ${CMAKE_INSTALL_BINDIR})
+# set (_glog_CMake_INCLUDE_DIR ${CMAKE_INSTALL_INCLUDEDIR})
+# set (_glog_CMake_LIBDIR ${CMAKE_INSTALL_LIBDIR})
+# set (_glog_CMake_INSTALLDIR ${_glog_CMake_LIBDIR}/cmake/glog)
+
+# set (_glog_CMake_DIR glog/cmake)
+# set (_glog_CMake_DATADIR ${CMAKE_INSTALL_DATAROOTDIR}/${_glog_CMake_DIR})
+# set (_glog_BINARY_CMake_DATADIR
+#   ${CMAKE_CURRENT_BINARY_DIR}/${_glog_CMake_DATADIR})
+
+# Add additional CMake find modules here.
+# set (_glog_CMake_MODULES)
+
+# if (Unwind_FOUND)
+#   # Copy the module only if libunwind is actually used.
+#   list (APPEND _glog_CMake_MODULES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindUnwind.cmake)
+# endif (Unwind_FOUND)
+
+# # Generate file name for each module in the binary directory
+# foreach (_file ${_glog_CMake_MODULES})
+#   get_filename_component (_module "${_file}" NAME)
+
+#   list (APPEND _glog_BINARY_CMake_MODULES
+#     ${_glog_BINARY_CMake_DATADIR}/${_module})
+# endforeach (_file)
+
+# if (_glog_CMake_MODULES)
+#   # Copy modules to binary directory during the build
+#   add_custom_command (OUTPUT ${_glog_BINARY_CMake_MODULES}
+#     COMMAND ${CMAKE_COMMAND} -E make_directory
+#     ${_glog_BINARY_CMake_DATADIR}
+#     COMMAND ${CMAKE_COMMAND} -E copy ${_glog_CMake_MODULES}
+#     ${_glog_BINARY_CMake_DATADIR}
+#     DEPENDS ${_glog_CMake_MODULES}
+#     COMMENT "Copying find modules..."
+#   )
+# endif (_glog_CMake_MODULES)
+
+set (GLOG_PUBLIC_H
+  ${PROJECT_BINARY_DIR}/contrib/glog/glog/export.h
+  ${PROJECT_BINARY_DIR}/contrib/glog/glog/logging.h
+  ${PROJECT_BINARY_DIR}/contrib/glog/glog/raw_logging.h
+  ${PROJECT_BINARY_DIR}/contrib/glog/glog/stl_logging.h
+  ${PROJECT_BINARY_DIR}/contrib/glog/glog/vlog_is_on.h
+  ${GLOG_SOURCE_DIR}/src/glog/log_severity.h
+  ${GLOG_SOURCE_DIR}/src/glog/platform.h
+)
+
+set (GLOG_SRCS
+  ${GLOG_PUBLIC_H}
+  ${GLOG_SOURCE_DIR}/src/base/commandlineflags.h
+  ${GLOG_SOURCE_DIR}/src/base/googleinit.h
+  ${GLOG_SOURCE_DIR}/src/base/mutex.h
+  ${GLOG_SOURCE_DIR}/src/demangle.cc
+  ${GLOG_SOURCE_DIR}/src/demangle.h
+  ${GLOG_SOURCE_DIR}/src/logging.cc
+  ${GLOG_SOURCE_DIR}/src/raw_logging.cc
+  ${GLOG_SOURCE_DIR}/src/symbolize.cc
+  ${GLOG_SOURCE_DIR}/src/symbolize.h
+  ${GLOG_SOURCE_DIR}/src/utilities.cc
+  ${GLOG_SOURCE_DIR}/src/utilities.h
+  ${GLOG_SOURCE_DIR}/src/vlog_is_on.cc
+)
+
+if (HAVE_PTHREAD OR WIN32 OR CYGWIN)
+  list (APPEND GLOG_SRCS ${GLOG_SOURCE_DIR}/src/signalhandler.cc)
+endif (HAVE_PTHREAD OR WIN32 OR CYGWIN)
+
+add_library (glogbase OBJECT
+  # ${_glog_BINARY_CMake_MODULES}
+  ${GLOG_SRCS}
+)
+
+add_library (glog
+  $<TARGET_OBJECTS:glogbase>
+)
+
+add_library (glog::glog ALIAS glog)
+
+set (glog_libraries_options_for_static_linking)
+
+target_link_libraries (glog PRIVATE unwind)
+set (glog_libraries_options_for_static_linking "${glog_libraries_options_for_static_linking} -lunwind")
+
+if (HAVE_DBGHELP)
+  target_link_libraries (glog PRIVATE dbghelp)
+  set (glog_libraries_options_for_static_linking "${glog_libraries_options_for_static_linking} -ldbghelp")
+endif (HAVE_DBGHELP)
+
+if (HAVE_PTHREAD)
+  target_link_libraries (glog PRIVATE ${CMAKE_THREAD_LIBS_INIT})
+
+  if (CMAKE_THREAD_LIBS_INIT)
+    set (glog_libraries_options_for_static_linking "${glog_libraries_options_for_static_linking} ${CMAKE_THREAD_LIBS_INIT}")
+  endif (CMAKE_THREAD_LIBS_INIT)
+endif (HAVE_PTHREAD)
+
+if (gflags_FOUND)
+  # Prefer the gflags target that uses double colon convention
+  if (TARGET gflags::gflags)
+    target_link_libraries (glog PUBLIC gflags::gflags)
+  else (TARGET gflags::gflags)
+    target_link_libraries (glog PUBLIC gflags)
+  endif (TARGET gflags::gflags)
+
+  set (glog_libraries_options_for_static_linking "${glog_libraries_options_for_static_linking} -lgflags")
+endif (gflags_FOUND)
+
+set_target_properties (glog PROPERTIES VERSION ${CPACK_PACKAGE_VERSION})
+# set_target_properties (glog PROPERTIES VERSION ${PROJECT_VERSION})
+set_target_properties (glog PROPERTIES SOVERSION 1)
+
+if (WITH_CUSTOM_PREFIX)
+  target_compile_definitions (glog PUBLIC GLOG_CUSTOM_PREFIX_SUPPORT)
+endif (WITH_CUSTOM_PREFIX)
+
+set_target_properties (glog PROPERTIES PUBLIC_HEADER "${GLOG_PUBLIC_H}")
+
+target_include_directories (glog BEFORE PUBLIC
+  "$<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/contrib/glog>"
+  "$<BUILD_INTERFACE:${GLOG_SOURCE_DIR}/src>"
+  PRIVATE ${PROJECT_BINARY_DIR}/contrib/glog
+  PRIVATE ${GLOG_SOURCE_DIR}/src)
+
+set_target_properties (glog PROPERTIES DEFINE_SYMBOL GOOGLE_GLOG_IS_A_DLL)
+
+target_include_directories (glogbase PUBLIC
+  $<TARGET_PROPERTY:glog,INCLUDE_DIRECTORIES>)
+target_compile_definitions (glogbase PUBLIC
+  $<TARGET_PROPERTY:glog,COMPILE_DEFINITIONS>
+  PRIVATE GOOGLE_GLOG_IS_A_DLL)
+
+generate_export_header (glog
+  EXPORT_MACRO_NAME GLOG_EXPORT
+  EXPORT_FILE_NAME ${PROJECT_BINARY_DIR}/contrib/glog/glog/export.h)
+
+# string (STRIP "${glog_libraries_options_for_static_linking}" glog_libraries_options_for_static_linking)

@@ -200,8 +200,7 @@ if(BUILD_PYTHON)
                                                     "${DISTDL_PYTHON_DIR}/distdl")
   target_link_libraries(
     distdl_internal PRIVATE ${distdl_libs} distdl_api_common
-                            distdl_pyext_obj)
-                            # distdl_pyext_obj glog::glog)
+                            distdl_pyext_obj glog::glog)
   target_include_directories(distdl_internal PRIVATE ${Python_INCLUDE_DIRS}
                                                       ${Python_NumPy_INCLUDE_DIRS})
 

@@ -48,8 +48,19 @@ if (COMPILER_CLANG)
     no_warning(unsafe-buffer-usage) # too aggressive
 
     # todo: add by pxcai, may removed in the future
-    no_warning(reserved-macro-identifier)
-    no_warning(poison-system-directories)
+    # no_warning(reserved-macro-identifier)
+    # no_warning(poison-system-directories)
+    # no_warning(reserved-identifier)
+    # no_warning(old-style-cast)
+    # no_warning(shadow-field-in-constructor)
+    # no_warning(zero-as-null-pointer-constant)
+    # no_warning(undefined-reinterpret-cast)
+    # no_warning(shadow)
+    # no_warning(shadow-field)
+    # no_warning(shadow-uncaptured-local)
+    # no_warning(documentation)
+    # no_warning(cast-function-type-strict)
+
 
     # TODO Enable conversion, sign-conversion, double-promotion warnings.
 endif ()

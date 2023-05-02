@@ -20,10 +20,10 @@ include (cmake/ccache.cmake)
 include (cmake/clang_tidy.cmake)
 include (cmake/git.cmake)
 
-# # Ignore export() since we don't use it,
-# # but it gets broken with a global targets via link_libraries()
-# macro (export)
-# endmacro ()
+# Ignore export() since we don't use it,
+# but it gets broken with a global targets via link_libraries()
+macro (export)
+endmacro ()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1) # Write compile_commands.json
 set(CMAKE_LINK_DEPENDS_NO_SHARED 1) # Do not relink all depended targets on .so
@@ -359,6 +359,4 @@ if (BUILD_PYTHON)
 endif ()
 
 include (cmake/distdl.cmake)
-
-# add_subdirectory (src)
 
