@@ -1,6 +1,8 @@
 
-#include "src/api/python/distdl_api_registry.hh"
+// todo: just for test glog
+#include <glog/logging.h>
 
+#include "src/api/python/distdl_api_registry.hh"
 namespace distdl {
 
 DISTDL_API_PYBIND11_MODULE("flags", m) {
