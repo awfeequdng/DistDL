@@ -212,9 +212,9 @@ if(BUILD_PYTHON)
 
   add_custom_target(
     distdl_pyscript_copy ALL
-    COMMAND ${CMAKE_COMMAND} -E touch "${distdl_proto_python_dir}/distdl/core/__init__.py"
-    COMMAND ${CMAKE_COMMAND} -E create_symlink "${distdl_proto_python_dir}/distdl/core"
-            "${DISTDL_PYTHON_DIR}/distdl/core"
+    # COMMAND ${CMAKE_COMMAND} -E touch "${distdl_proto_python_dir}/distdl/core/__init__.py"
+    # COMMAND ${CMAKE_COMMAND} -E create_symlink "${distdl_proto_python_dir}/distdl/core"
+    #         "${DISTDL_PYTHON_DIR}/distdl/core"
     COMMAND
       ${Python_EXECUTABLE} ${PROJECT_SOURCE_DIR}/tools/generate_pip_version.py ${gen_pip_args}
       --src=${PROJECT_SOURCE_DIR} --cmake_project_binary_dir=${PROJECT_BINARY_DIR}
@@ -222,9 +222,11 @@ if(BUILD_PYTHON)
 
   # source this file to add distdl in PYTHONPATH
   file(WRITE "${PROJECT_BINARY_DIR}/source.sh"
-       "export PYTHONPATH=${DISTDL_PYTHON_DIR}:$PYTHONPATH")
+       "export PYTHONPATH=${DISTDL_PYTHON_DIR}:$PYTHONPATH\n")
 
   # add_dependencies(distdl_pyscript_copy distdl_protoobj)
+  # add_dependencies(distdl_pyscript_copy make_pyproto_dir)
+
 
 endif(BUILD_PYTHON)
 
