@@ -54,15 +54,15 @@ def get_version():
 
 REQUIRED_PACKAGES = [
     f"numpy>={np.__version__}",
-    "protobuf>=3.9.2, <4.0",
-    "tqdm",
-    "requests",
-    "pillow",
-    "rich",
+    # "protobuf>=3.9.2, <4.0",
+    # "tqdm",
+    # "requests",
+    # "pillow",
+    # "rich",
 ]
 
-ONEFLOW_VERSION = get_version()
-if "cu11" in ONEFLOW_VERSION and "cu112" not in ONEFLOW_VERSION:
+DISTDL_VERSION = get_version()
+if "cu11" in DISTDL_VERSION and "cu112" not in DISTDL_VERSION:
     REQUIRED_PACKAGES.append("nvidia-cudnn-cu11")
     REQUIRED_PACKAGES.append("nvidia-cublas-cu11")
 
@@ -93,7 +93,7 @@ def get_distdl_internal_so_path():
 
 
 package_data = {"distdl": [get_distdl_internal_so_path()] + include_files}
-
+print(f"package_data: {package_data}")
 
 setup(
     name=args.package_name,
@@ -106,7 +106,7 @@ setup(
     zip_safe=False,
     distclass=BinaryDistribution,
     cmdclass={"install": InstallPlatlib},
-    entry_points={
-        "console_scripts": ["distdl-mock-torch=distdl.mock_torch.__main__:main"]
-    },
+    # entry_points={
+    #     "console_scripts": ["distdl-mock-torch=distdl.mock_torch.__main__:main"]
+    # },
 )
