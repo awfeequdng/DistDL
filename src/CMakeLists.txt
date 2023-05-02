@@ -1,3 +1,5 @@
+
+
 file(
     GLOB_RECURSE
     distdl_all_src
@@ -5,20 +7,20 @@ file(
     "${PROJECT_SOURCE_DIR}/src/api/*.*"
 )
 
+set(DISTDL_PYTHON_DIR "${PROJECT_BINARY_DIR}/python")
+
 # set BUILD_SHARED_LIBS
-set(BUILD_SHARED_LIBS ON)
+# set(BUILD_SHARED_LIBS ON)
 
-add_library(distdl
-    ${distdl_all_src}
-)
+pybind11_add_module(distdl ${distdl_all_src})
 
-target_include_directories(distdl PRIVATE ${Python_INCLUDE_DIRS})
+set_target_properties(distdl PROPERTIES PREFIX "_")
 
-target_link_libraries(distdl
-    PRIVATE
-        ch_contrib::pybind11
-        ${Python3_LIBRARIES}
-)
+set_target_properties(distdl PROPERTIES LIBRARY_OUTPUT_DIRECTORY
+                                        "${DISTDL_PYTHON_DIR}/distdl")
+
+# set_property(TARGET distdl PROPERTY CXX_VISIBILITY_PRESET "default")
+
 
 # unset BUILD_SHARED_LIBS
-set(BUILD_SHARED_LIBS OFF)
+# set(BUILD_SHARED_LIBS OFF)

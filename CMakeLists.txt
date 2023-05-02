@@ -342,10 +342,23 @@ include (cmake/print_flags.cmake)
 include_directories(./)
 
 option(BUILD_PYTHON "build python api" ON)
-option(DEFAULT_PYTHON_VERSION "default python version" 3.8)
+option(DEFAULT_PYTHON_VERSION "default python version" 3)
+
+include (cmake/util.cmake)
+
+message(STATUS "show variables()")
+
+# SHOW_VARIABLES()
+set(DISTDL_PYTHON_DIR "${PROJECT_SOURCE_DIR}/python" CACHE PATH "distdl python src dir")
 
 if (BUILD_PYTHON)
     include (cmake/python.cmake)
+    include (cmake/pybind11.cmake)
+
+    set(DISTDL_INCLUDE_DIR "${DISTDL_PYTHON_DIR}/distdl/include")
 endif ()
 
-add_subdirectory (src)
+include (cmake/distdl.cmake)
+
+# add_subdirectory (src)
+

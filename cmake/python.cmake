@@ -1,4 +1,6 @@
-if(NOT DEFINED Python3_EXECUTABLE)
+if (DEFINED Python3_EXECUTABLE)
+  return()
+else()
   execute_process(
     COMMAND which python${DEFAULT_PYTHON_VERSION}
     RESULT_VARIABLE STATUS
@@ -79,3 +81,20 @@ set(CODEGEN_PYTHON_EXECUTABLE ${Python_EXECUTABLE}
 if(NOT "${CODEGEN_PYTHON_EXECUTABLE}" STREQUAL "${Python_EXECUTABLE}")
   install_py_dev_deps(${CODEGEN_PYTHON_EXECUTABLE})
 endif()
+
+
+set(PYTHON_MODULE_PREFIX "")
+# default python extension
+set(PYTHON_MODULE_EXTENSION ".so")
+
+execute_process(
+    COMMAND ${Python3_EXECUTABLE}-config --extension-suffix
+    RESULT_VARIABLE EXT_STATUS
+    OUTPUT_VARIABLE PY_EXTENSION
+    ERROR_QUIET)
+if(EXT_STATUS EQUAL 0)
+    string(STRIP ${PY_EXTENSION} STRIPPED_PY_EXTSION)
+    message(STATUS "python3 extension: ${STRIPPED_PY_EXTSION}")
+    set(PYTHON_MODULE_EXTENSION ${STRIPPED_PY_EXTSION})
+endif()
+
