@@ -14,3 +14,5 @@ if "CUDA_MODULE_LOADING" not in os.environ:
 import distdl._distdl_internal as ddl_internal
 
 ddl_internal.test.reg_test()
+
+ddl_internal.InitNumpyCAPI()

@@ -163,7 +163,9 @@ target_link_libraries(
   -Wl,--no-whole-archive
   -Wl,--as-needed
   -ldl
-  -lrt)
+  -lrt
+  glog::glog
+  )
 if(BUILD_CUDA)
   target_link_libraries(distdl CUDA::cudart_static)
 endif()
