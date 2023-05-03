@@ -40,7 +40,8 @@ void EnvGlobalObjectsScope::Init() {
 
 EnvGlobalObjectsScope::~EnvGlobalObjectsScope() {
     VLOG(2) << "Try to close env global objects scope." << std::endl;
-    // std::cout << "Finish closing env global objects scope." << std::endl;
+    std::cout << "Finish closing env global objects scope." << std::endl;
+
     google::ShutdownGoogleLogging();
 }
 

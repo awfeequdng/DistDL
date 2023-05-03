@@ -48,6 +48,8 @@ NumPyArrayInternal::~NumPyArrayInternal() {
 // https://numpy.org/doc/stable/reference/c-api/array.html#importing-the-api
 void InitNumpyCAPI() {
     LOG(INFO) << "InitNumpyCAPI()";
+    // VLOG(2) << "InitNumpyCAPI()" << std::endl;
+
     if (PyArray_API != nullptr) {
       return;
     }

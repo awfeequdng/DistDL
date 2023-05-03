@@ -262,7 +262,7 @@ option(ENABLE_LIBRARIES "Enable all external libraries by default" ON)
 include(cmake/distdl_glob_sources.cmake)
 
 
-# set(BUILD_SHARED_LIBS ON)
+set(BUILD_SHARED_LIBS ON)
 
 set (CMAKE_POSITION_INDEPENDENT_CODE ON)
 
